@@ -34,12 +34,13 @@ string leer_texto(string name_texto)
     else {datos = "";cout<<"Error de Lectura"<<endl;}
     base_de_datos.close();
     return datos;}
-red crear_routers_texto(string texto)
+/*red crear_routers_texto(string texto)
 {
     string linea,letras;
     stringstream saltos_linea(texto);//esto es una especie de split para separar las letras o caracteres
     long long int cont=0;
-    red x;
+    // red x;  //miramos si nos da para hacer el costructor red
+
     while (getline(saltos_linea, linea, '\n'))
 //        while (getline(saltos_linea, linea, '\n'))
     {
@@ -49,12 +50,12 @@ red crear_routers_texto(string texto)
         //cout<<letras<<'\t';
         cont++;
         if(cont%3!=0){
-        x.agg_router_red(letras);}
+        red_.agg_router_red(letras);}
     }
 
 }
     return x;
-}
+}*/
 
 red agregar_datos_texto(red x,string datos){
     string linea,letras,nombre1,nombre2;
@@ -164,8 +165,9 @@ string numero_string(long long numero){
     }
     return numerof;
 }
+/*
 red aleatory(){//esto lo podemos usar desde la clase a coomo una funcion de a
-    red a;
+    //red a; //miramos si podemos hacer el costructor de red
     long long int num = 0;
     cout<<"De cuantos routers quiere su red aleatoria"<<endl;
     cin>>num;
@@ -187,6 +189,7 @@ red aleatory(){//esto lo podemos usar desde la clase a coomo una funcion de a
      return a;}
     else{cout<<"la cantidad de routers excede las letras disponobles"<<endl;}
 }
+*/
 bool true_false(int porcentaje){
     srand(time(NULL));
     int num_aleatorio=rand()%100;
@@ -219,3 +222,4 @@ for (it_red = a.begin(); it_red != a.end(); it_red++){
     }}
   }it_red->second.imp_enrutadores();
 }}
+

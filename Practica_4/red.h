@@ -1,9 +1,16 @@
 #ifndef RED_H
 #define RED_H
+#include "funciones.h"
+#include "red.h"
 #include <iostream>
 #include <vector>
 #include <list>
 #include <map>
+#include <fstream>
+#include <sstream>
+#include <cmath>
+#include <vector>
+#include <queue>
 using namespace std;
 
 
@@ -18,7 +25,10 @@ private://atributos
 
 public://metodos
     Router(string,long long int);//hacemos el costructor
-    map<string,long long int> router2();
+    //map<string,long long int> router2();
+    map<string,long long int>& router2();
+
+
     void agg_enrutadores(string,long long int);//agregamos al mapa lo indicado
     void dltt_enrutadores(string);//eliminamos enrutadores
     void imp_enrutadores();//impimimos(atualizamos) enrutadores
@@ -33,19 +43,22 @@ public://metodos
 class red
 {
 private:
+string nom_red;
 map<string,Router> red_;//definimos el mapa toma los valores
 map<string,Router>::iterator it_red;//definimos el iterador el saca la info de map
+//map<string, Router>* red_=new map<string, Router>;
 
 
 
 public:
-//red(string,long long int);
+//red (string nick);
 void agg_router_red(string);
 void cam_enlase_enrutadores_red(string nombre1,string nombre2, long long valor);
 void dllt_router_red(string);
 void imp_router_red();
 void archivo_router_red();
 void algoritmo_dijkstra();
+void aleatorio();
 
 
 };

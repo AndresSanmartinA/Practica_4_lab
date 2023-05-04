@@ -1,14 +1,23 @@
+
+#include "funciones.h"
 #include "red.h"
 #include <iostream>
 #include <vector>
 #include <list>
 #include <map>
-#include <list>
+#include <fstream>
+#include <sstream>
+#include <cmath>
+#include <vector>
+#include <queue>
 using namespace std;
+bool true_false(int porcentaje);
 
 string numero_string(int numero);
 //void dijkstra(vector<vector<long long int>> &grafo, long long int origen,map<string,Router> red_);
 void dijkstra(vector<vector<long long int>> &grafo, long long int origen,map<string,Router> red_,map<string,Router>::iterator it_red);
+
+
 Router::Router(string _nombre, long long int _enlase)
 {
 _enlase=0;
@@ -19,7 +28,7 @@ agg_enrutadores(_nombre,_enlase);
 
 }
 
-map<string, long long int> Router::router2()
+map<string, long long int > &Router::router2()
 {
     return nombre_;
 }
@@ -127,10 +136,24 @@ vector<long long> Router::router_list_vt()
 
 
 
+/*red::red(string nombre)
+{
+    nom_red=nombre;
+    <nombre,Router(nombre,o)>red_;
+}
+*/
+/*red::red(string nick)
+{
+
+    //Router mi_enrutador(nombre, 0); // Creamos un objeto de la clase Router con el nombre "enrutador1"
+    red_.insert(make_pair("RED", Router (nick,0))); // Agregamos el objeto al mapa "red_"
+}*/
+
 void red::agg_router_red(string nom_agg_red)
 {
+   Router a(nom_agg_red,0);
    if(red_.find(nom_agg_red)==red_.end()){//miramos si no existe
-       Router a(nom_agg_red,0);
+
        for(it_red=red_.begin();it_red!=red_.end();it_red++){
            a.agg_enrutadores(it_red->first,-1);
             it_red->second.agg_enrutadores(nom_agg_red,-1);//agregamos la desconexion en los otros routers
@@ -208,6 +231,68 @@ it_red=red_.begin();
          it_red++;
          cout << "\n";
      }
+}
+
+void red::aleatorio() {
+   // string nombre_random="";
+    //nombre_random = (char)(97 + rand() % (26));
+    red a;
+    //red a;
+    int num = 0;
+    cout << "De cuantos routers quiere su red aleatoria" << endl;
+    cin >> num;
+    int num2=0;
+    int longitud_nombre = ceil(log(num) / log(26));
+    if (longitud_nombre <= 26) {
+        string letra_random = "";
+        srand(time(NULL)); // Se establece la semilla aleatoria una vez al inicio del programa
+
+        while (num > num2) {
+            for (int i = 0; i < longitud_nombre; i++) {
+                letra_random += (char)(97 + rand() % (26)); // Se agrega cada letra generada al final del string
+            }
+            //hacer un contador por si sale una letra repetida
+            a.agg_router_red(letra_random);
+            letra_random = ""; // Se reinicia el string para la siguiente iteración
+            num2=0;
+            for(a.it_red=a.red_.begin();a.it_red!=a.red_.end();a.it_red++,num2++);
+
+        }
+    } else {
+        cout << "La cantidad de routers excede las letras disponibles" << endl;
+    }
+    int x=0;
+    cout<<"ingrese la probabilidad de 1 a 100 para la conexion de los routers"<<endl;
+    cin>> x;
+    long long int costo=0,numero_f=0;
+    cout<<"ingrese de cuantos digitos quieres el costo de los enlases"<<endl;
+    cin>>costo;
+    //map<string,Router>::iterator it_red3;
+    //map<string,Router>::iterator it_red2;
+    map<string,long long int> cambio;
+    long long int contador=0;
+    map<string,long long int>::iterator it_router;
+// esta en el it_red pero de a
+    for (a.it_red = a.red_.begin(); a.it_red != a.red_.end(); a.it_red++){
+      cambio=(a.it_red->second.router2());
+
+
+        for (it_router = (cambio).begin(); it_router != (cambio).end(); it_router++){
+            //aqui deberia venir el if
+            bool resultado = true_false(x);
+            if (resultado){
+                if(a.it_red->first!=it_router->first){
+                    numero_f += (long long int)(rand() % (int)(pow(10, costo) - 1) + 1);
+
+          a.cam_enlase_enrutadores_red(a.it_red->first,it_router->first,numero_f);
+                  numero_f=0;
+        }}
+      }
+      cambio.clear();
+    }a.imp_router_red();
+
+
+
 }
 
 

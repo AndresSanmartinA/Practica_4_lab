@@ -50,12 +50,14 @@ z.imp_router_red();
 z=agregar_datos_texto(z,name_texto);
 z.imp_router_red();
 z.algoritmo_dijkstra();*/
-red a;
+red b;
 //map<string,Router>::iterator the_red;
 //the_red=a.begin();
-a=aleatory();
-a.imp_router_red();
-a=probabilidad(a);
+//a=aleatory();
+//a.imp_router_red();
+//a=probabilidad(a);
+b.aleatorio();
+//b.imp_router_red();
 
     return 0;
 
