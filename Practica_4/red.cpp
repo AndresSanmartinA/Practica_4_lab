@@ -90,8 +90,9 @@ string Router::router_vector()
 
    for(it=nombre_.begin();it!=nombre_.end();it++){
        z=it->second;
-       if(z==-1){z=9999;}
-       if(z>9){
+       if(z==-1){z=999;}
+
+       else if(z>9){
            string numerof="",numerof2="";
 
            for(long long x;z>0;x++){
@@ -106,7 +107,7 @@ string Router::router_vector()
            }
                c=c+" "+numerof2;
        }
-           else{
+           else {
        b =(z+48);
        c=c+" "+b;
    }}
@@ -166,21 +167,40 @@ void red::agg_router_red(string nom_agg_red)
 
    }
 }
+/*void red::agg_router_red2(string nom_agg_red,red& cambio)
+{
+   Router a(nom_agg_red,0);
+   if(red_.find(nom_agg_red)==red_.end()){//miramos si no existe
+
+       for(it_red=red_.begin();it_red!=red_.end();it_red++){
+           a.agg_enrutadores(it_red->first,-1);
+            it_red->second.agg_enrutadores(nom_agg_red,-1);//agregamos la desconexion en los otros routers
+       }
+       //a.imp_enrutadores();
+       cambio.insert(pair<string,Router>(nom_agg_red,a));
+
+       //a.imp_enrutadores();
+
+
+   }
+}*/
 
 void red::cam_enlase_enrutadores_red(string nombre1,string nombre2, long long valor)
     {
 for (it_red = red_.begin(); it_red != red_.end(); ++it_red) {
 if((it_red->first)==nombre1){
-it_red->second.cam_enlase_enrutadores(nombre2,valor);}
-
-
-        }
-            }
+it_red->second.cam_enlase_enrutadores(nombre2,valor);}}
+for(it_red = red_.begin(); it_red != red_.end(); ++it_red){
+    if((it_red->first)==nombre2){
+    it_red->second.cam_enlase_enrutadores(nombre1,valor);}}
+}
 
 
 void red::dllt_router_red(string nom_red_eli)
-{
-    if(red_.find(nom_red_eli)!=red_.end()){
+{it_red=red_.begin();
+    if(it_red==red_.end()){cout<<"No tienes Routers"<<'\n';}
+
+    else if(red_.find(nom_red_eli)!=red_.end()){
         Router a(nom_red_eli,0);
         for(it_red=red_.begin();it_red!=red_.end();it_red++){
             //a.dltt_enrutadores(nom_red_eli);
@@ -197,7 +217,9 @@ void red::dllt_router_red(string nom_red_eli)
 }
 
 void red::imp_router_red()
-{
+{it_red=red_.begin();
+    if(it_red==red_.end()){cout<<"No tienes Routers"<<'\n';}
+    else{
     it_red=red_.begin();
     cout<<"RED"<<'\t';
     it_red->second.imp_enrutadores_nom();
@@ -207,12 +229,36 @@ void red::imp_router_red()
    it_red->second.imp_enrutadores();
 
     }
-    cout<<endl;
+    cout<<endl;}
 }
+
+void red::archivo_router_red(string texto,red& open)
+{
+    string linea,letras;
+    stringstream saltos_linea(texto);//esto es una especie de split para separar las letras o caracteres
+    long long int cont=0;
+    // red x;  //miramos si nos da para hacer el costructor red
+
+    while (getline(saltos_linea, linea, '\n'))
+//        while (getline(saltos_linea, linea, '\n'))
+    {
+        stringstream grupos(linea);
+
+    while(getline(grupos, letras, ' ')) {
+        //cout<<letras<<'\t';
+        cont++;
+        if(cont%3!=0){
+        open.agg_router_red(letras);}
+    }
+
+}
+}
+
+
 
 void red::algoritmo_dijkstra()
 {
-    string a="",vector_string="";
+    string a="inf",vector_string="";
     list <list<long long int>>lineal;
     vector<vector<long long int>>the_vector;
  for(it_red=red_.begin();it_red!=red_.end();it_red++){
@@ -233,14 +279,16 @@ it_red=red_.begin();
      }
 }
 
-void red::aleatorio() {
+void red::aleatorio(red& a, string num3) {
    // string nombre_random="";
     //nombre_random = (char)(97 + rand() % (26));
-    red a;
+    //red a;
     //red a;
     int num = 0;
+    if(num3=="1"){num=rand() % 100 + 1;}
+    else{
     cout << "De cuantos routers quiere su red aleatoria" << endl;
-    cin >> num;
+    cin >> num;}
     int num2=0;
     int longitud_nombre = ceil(log(num) / log(26));
     if (longitud_nombre <= 26) {
@@ -255,12 +303,17 @@ void red::aleatorio() {
             a.agg_router_red(letra_random);
             letra_random = ""; // Se reinicia el string para la siguiente iteración
             num2=0;
-            for(a.it_red=a.red_.begin();a.it_red!=a.red_.end();a.it_red++,num2++);
+            for(a.it_red=a.red_.begin();a.it_red!=a.red_.end();a.it_red++,num2++){}
 
-        }
-    } else {
+        }}
+     else {
         cout << "La cantidad de routers excede las letras disponibles" << endl;
     }
+
+}
+
+void red::probabilidad(red &a)
+{
     int x=0;
     cout<<"ingrese la probabilidad de 1 a 100 para la conexion de los routers"<<endl;
     cin>> x;

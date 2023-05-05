@@ -56,9 +56,10 @@ void agg_router_red(string);
 void cam_enlase_enrutadores_red(string nombre1,string nombre2, long long valor);
 void dllt_router_red(string);
 void imp_router_red();
-void archivo_router_red();
+void archivo_router_red(string,red&);
 void algoritmo_dijkstra();
-void aleatorio();
+void aleatorio(red&, string );
+void probabilidad(red&);
 
 
 };

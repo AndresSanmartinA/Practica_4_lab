@@ -57,7 +57,7 @@ string leer_texto(string name_texto)
     return x;
 }*/
 
-red agregar_datos_texto(red x,string datos){
+red agregar_datos_texto(red& x,string datos){
     string linea,letras,nombre1,nombre2;
     stringstream saltos_linea(datos);//esto es una especie de split para separar las letras o caracteres
     long long int cont=0,valor=0;
@@ -126,13 +126,13 @@ it_red2=red_.begin();
     for(long long int v = 0; v < n; ++v,it_red2++) {
         if(v == origen) continue;
        // if(distancia[v] == INF) {
-         if(distancia[v] == (-1)) {
+         if(distancia[v] == (1000000000)) {
             cout << "No hay camino desde " << it_red->first<< " hasta " << it_red2->first << "\n";
         } else {
             cout << "El camino mas corto desde " << it_red->first << " hasta " << it_red2->first << " es " << distancia[v] << ": ";
             vector<long long int> camino;
             long long int u = v;
-            while(u != -1) {
+            while(u !=-1){
                 camino.push_back(u);
                 u = previo[u];
             }
@@ -206,7 +206,7 @@ cin>>costo;
 map<string,Router>::iterator it_red;
 map<string,Router>::iterator it_red2;
 map<string,long long int> cambio;
-long long int contador=0;
+//long long int contador=0;
 map<string,long long int>::iterator it_router;
 
 for (it_red = a.begin(); it_red != a.end(); it_red++){
@@ -223,3 +223,155 @@ for (it_red = a.begin(); it_red != a.end(); it_red++){
   }it_red->second.imp_enrutadores();
 }}
 
+void menu(){
+ string salir="1";
+    red a;
+    while(salir!="0"){
+        cout<<"______Bienvenido______"<<'\n';
+        cout<<"Marque 1 para: crear red."<<'\n'<<"Marque 2 para: Cargar Red."<<'\n'<<"Marque 3 para:Generar Red Aleatoria"<<'\n'<<"Marque 0 para: Salir."<<'\n';
+        cin>>salir;
+        if (salir=="1"){salir="9";
+            string primer_red;
+            cout<<"ingresa el nombre de la primer red. "<<'\n';
+            cin>>primer_red;
+            a.agg_router_red(primer_red);
+            while(salir!="0"){
+                cout<<"Marque 1 para: Agregar enrutadores."<<'\n'<<"Marque 2 para: Eliminar enrutadores."<<'\n'<<"Marque 3 para: Modificar el valor del enlase."<<'\n'<<"Marque 4 para imprimir red"<<'\n'<<"marque 5 para ver el camino mas varato entre routers"<<'\n'<<"Marque 0 para: salir."<<'\n';
+                cin>>salir;
+                if(salir=="1"){
+                    string agregar;
+                    cout<<"Ingrese El nombre rel router a agregar, tenga en cuenta que si ya existe no sera agregado."<<'\n';
+                    cin>>agregar;
+                    a.agg_router_red(agregar);
+                }
+                else if(salir=="2"){
+                    string eliminar;
+                    cout<<"ingrese El nombre del roter a eliminar"<<'\n';
+                    cin>>eliminar;
+                    //a.it_red=a.red_.begin();
+                    //if(a.it_red==a.red_.end()){
+                   //     cout<<"No tienes Routers en la red";}
+                    //else{a.agg_router_red(eliminar);}
+                    a.dllt_router_red(eliminar);
+                    }
+
+                else if(salir=="3"){
+                              //if(a.red_.size()<2){
+                              //cout<<"Necesitas minimo otro Router ya pra modificar los enlases"<<'\n';
+                   // }
+                              //else{
+                              string nombre1,nombre2;
+                              long long int enlase;
+                              cout<<"Ingrese el nombre del Router 1"<<'\n';
+                              cin>>nombre1;
+                              cout<<"Ingrese el nombre del Router 2"<<'\n';
+                              cin>>nombre2;
+                              cout<<"Ingrese el Valor del nuevo enlase"<<'\n';
+                              cin>>enlase;
+                              if(nombre1!=nombre2){
+                              a.cam_enlase_enrutadores_red(nombre1,nombre2,enlase);}
+                              else{
+                                  cout<<"No se puede cambiar el valor de enlase consigo mismo."<<'\n';
+                              }
+                  //  }
+                    }
+                else if(salir=="4"){a.imp_router_red();}
+                else if(salir=="5"){a.algoritmo_dijkstra();}
+
+            }
+        }
+        else if(salir=="2"){salir="9";
+            string datos=" ";
+            string name_texto;
+            while(datos==" "){
+            cout<<"Ingrese el nombre del texto incluyendo txt"<<'\n';
+            cin>>name_texto;
+            datos=leer_texto(name_texto);}
+            a.archivo_router_red(datos,a);
+             a=agregar_datos_texto(a,datos);
+                              while(salir!="0"){
+                              cout<<"Marque 1 para: Agregar enrutadores."<<'\n'<<"Marque 2 para: Eliminar enrutadores."<<'\n'<<"Marque 3 para: Modificar el valor del enlase."<<'\n'<<"Marque 4 para imprimir red"<<'\n'<<"marque 5 para ver el camino mas varato entre routers"<<'\n'<<"Marque 0 para: salir."<<'\n';
+                               cin>>salir;
+                                  if(salir=="1"){salir="9";
+                                      string agregar;
+                                      cout<<"Ingrese El nombre rel router a agregar, tenga en cuenta que si ya existe no sera agregado."<<'\n';
+                                      cin>>agregar;
+                                      a.agg_router_red(agregar);
+                                  }
+                                  else if(salir=="2"){salir="9";
+                                      string eliminar;
+                                      cout<<"ingrese El nombre del roter a eliminar"<<'\n';
+                                      cin>>eliminar;
+                                     // if(a.it_red=a.red_.begin()){
+                                   //       cout<<"No tienes Routers en la red";}
+                                    //  else{a.agg_router_red(eliminar);}
+                                      a.dllt_router_red(eliminar);
+                                      }
+
+                                  else if(salir=="3"){salir="9";
+                                               // if(a.red_.size()<2){
+                                               // cout<<"Necesitas minimo otro Router ya pra modificar los enlases"<<'\n';
+                                     // }
+                                         //       else{
+                                                string nombre1,nombre2;
+                                                long long int enlase;
+                                                cout<<"Ingrese el nombre del Router 1"<<'\n';
+                                                cin>>nombre1;
+                                                cout<<"Ingrese el nombre del Router 2"<<'\n';
+                                                cin>>nombre2;
+                                                cout<<"Ingrese el Valor del nuevo enlase"<<'\n';
+                                                cin>>enlase;
+                                                if(nombre1!=nombre2){
+                                                a.cam_enlase_enrutadores_red(nombre1,nombre2,enlase);}
+                                                else{
+                                                    cout<<"No se puede cambiar el valor de enlase consigo mismo."<<'\n';
+                                                }
+                                              //a.cam_enlase_enrutadores_red(nombre2,nombre1,enlase);
+
+                                     // }
+                                      }
+                                  else if(salir=="4"){a.imp_router_red();salir="9";}
+                                  else if(salir=="5"){a.algoritmo_dijkstra();salir="9";}
+
+                              }
+
+//        else if(salir==3){
+//        string inicio =nombre_random = (char)(97 + rand() % (26));
+//        a.agg_router_red(inicio);
+
+//                    }
+        }
+        else if(salir=="3"){salir="9";
+            string rad="";
+            int b=0;
+            while(b==0){cout<<"Ingrese 0 para: decidir cuantos routers crear"<<'\n'<<"Marque 1 para:La Cantidad de Routers aleatoria de 1 a 100"<<'\n';
+                cin>>rad;
+            if((rad=="1")or(rad=="0")){b=99;}
+            }
+            a.aleatorio(a,rad);
+            while(salir!="0"){
+                cout<<"Marque 1 para: imrpimir RED"<<'\n'<<"Marque 2 para: Generar enlases Aleatorios"<<'\n'<<"Marque 3 Para: modificar enlases"<<'\n'<<"Marque 4 para: ver el camino mas favorable"<<'\n'<<"Marque 0 para: salir."<<'\n';
+                cin>>salir;
+                if(salir=="1"){
+          a.imp_router_red();}
+                else if(salir=="2"){a.probabilidad(a);}
+                else if(salir=="3"){
+                    string nombre1,nombre2;
+                    long long int enlase;
+                    cout<<"Ingrese el nombre del Router 1"<<'\n';
+                    cin>>nombre1;
+                    cout<<"Ingrese el nombre del Router 2"<<'\n';
+                    cin>>nombre2;
+                    cout<<"Ingrese el Valor del nuevo enlase"<<'\n';
+                    cin>>enlase;
+                    if(nombre1!=nombre2){
+                    a.cam_enlase_enrutadores_red(nombre1,nombre2,enlase);}
+                    else{
+                        cout<<"No se puede cambiar el valor de enlase consigo mismo."<<'\n';
+                    }}
+                else if(salir=="4"){a.algoritmo_dijkstra();salir="9";}
+            }
+                      }
+        else{cout<<"Marcacion errada intentalo de nuevo"<<'\n';}
+    }
+}

@@ -12,7 +12,7 @@ using namespace std;
 
 string leer_texto(string name_texto);
 red crear_routers_texto(string texto);
-red agregar_datos_texto(red z,string datos);
+red agregar_datos_texto(red &x, string datos);
 long long int string_numeros(string numeros_txt);
 //void dijkstra(vector<vector<long long int>> &grafo, long long int origen, map<string, map> router);
 //void dijkstra(vector<vector<long long int>> &grafo, long long int origen,red& router);
@@ -22,5 +22,7 @@ red aleatory();
 //red probabilidad(map<string,Router> a);
 bool true_false(int porcentaje);
 red probabilidad(map<string,Router>& a);
+
+void menu();
 
 #endif // FUNCIONES_H
