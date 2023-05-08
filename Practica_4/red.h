@@ -29,11 +29,12 @@ public://metodos
     map<string,long long int>& router2();
 
 
-    void agg_enrutadores(string,long long int);//agregamos al mapa lo indicado
+    void agg_enrutadores(string, long long int);//agregamos al mapa lo indicado
     void dltt_enrutadores(string);//eliminamos enrutadores
     void imp_enrutadores();//impimimos(atualizamos) enrutadores
     void imp_enrutadores_nom();//imprimimos las keys
     void cam_enlase_enrutadores(string,long long int);//cambiamos valor de enlace
+    //void cam_enlase_enrutadores_red2(string nombre1,string nombre2, long long valor,red& a);//lo usamos para probabilidad intento
     string router_vector();
     list<long long int> router_list();
     vector<long long int>router_list_vt();
@@ -45,7 +46,8 @@ class red
 private:
 string nom_red;
 map<string,Router> red_;//definimos el mapa toma los valores
-map<string,Router>::iterator it_red;//definimos el iterador el saca la info de map
+map<string,Router>::iterator it_red;
+map<string,Router>::iterator it_red2;//definimos el iterador el saca la info de map
 //map<string, Router>* red_=new map<string, Router>;
 
 

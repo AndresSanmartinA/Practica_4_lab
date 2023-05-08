@@ -10,6 +10,9 @@
 #include <cmath>
 #include <vector>
 #include <queue>
+#include <cstdlib>
+#include <ctime>
+#include <random>
 using namespace std;
 bool true_false(int porcentaje);
 
@@ -23,7 +26,7 @@ Router::Router(string _nombre, long long int _enlase)
 _enlase=0;
 nombre=_nombre;//le cambiamos el nombre para que sepa que no se refiere al nombre en class
 enlase=_enlase;
-
+srand(time(NULL));
 agg_enrutadores(_nombre,_enlase);
 
 }
@@ -153,6 +156,7 @@ vector<long long> Router::router_list_vt()
 void red::agg_router_red(string nom_agg_red)
 {
    Router a(nom_agg_red,0);
+
    if(red_.find(nom_agg_red)==red_.end()){//miramos si no existe
 
        for(it_red=red_.begin();it_red!=red_.end();it_red++){
@@ -186,14 +190,26 @@ void red::agg_router_red(string nom_agg_red)
 }*/
 
 void red::cam_enlase_enrutadores_red(string nombre1,string nombre2, long long valor)
-    {
+    {it_red2=it_red;
 for (it_red = red_.begin(); it_red != red_.end(); ++it_red) {
 if((it_red->first)==nombre1){
 it_red->second.cam_enlase_enrutadores(nombre2,valor);}}
 for(it_red = red_.begin(); it_red != red_.end(); ++it_red){
     if((it_red->first)==nombre2){
     it_red->second.cam_enlase_enrutadores(nombre1,valor);}}
-}
+it_red=it_red2;
+    }
+
+/*void red::cam_enlase_enrutadores_red2(string nombre1,string nombre2, long long valor,red& a)
+    {
+
+for (it_red = a.red_.begin(); it_red != a.red_.end(); ++it_red) {
+if((it_red->first)==nombre1){
+it_red->second.cam_enlase_enrutadores(nombre2,valor);}}
+for(it_red = a.red_.begin(); it_red != a.red_.end(); ++it_red){
+    if((it_red->first)==nombre2){
+    it_red->second.cam_enlase_enrutadores(nombre1,valor);}}
+}*/
 
 
 void red::dllt_router_red(string nom_red_eli)
@@ -293,7 +309,7 @@ void red::aleatorio(red& a, string num3) {
     int longitud_nombre = ceil(log(num) / log(26));
     if (longitud_nombre <= 26) {
         string letra_random = "";
-        srand(time(NULL)); // Se establece la semilla aleatoria una vez al inicio del programa
+       // srand(time(NULL)); // Se establece la semilla aleatoria una vez al inicio del programa
 
         while (num > num2) {
             for (int i = 0; i < longitud_nombre; i++) {
@@ -314,6 +330,7 @@ void red::aleatorio(red& a, string num3) {
 
 void red::probabilidad(red &a)
 {
+
     int x=0;
     cout<<"ingrese la probabilidad de 1 a 100 para la conexion de los routers"<<endl;
     cin>> x;
@@ -323,9 +340,10 @@ void red::probabilidad(red &a)
     //map<string,Router>::iterator it_red3;
     //map<string,Router>::iterator it_red2;
     map<string,long long int> cambio;
-    long long int contador=0;
+//    long long int contador=0;
     map<string,long long int>::iterator it_router;
 // esta en el it_red pero de a
+    //srand(time(NULL)); // Se establece la semilla aleatoria una vez al inicio del programa
     for (a.it_red = a.red_.begin(); a.it_red != a.red_.end(); a.it_red++){
       cambio=(a.it_red->second.router2());
 
@@ -335,14 +353,18 @@ void red::probabilidad(red &a)
             bool resultado = true_false(x);
             if (resultado){
                 if(a.it_red->first!=it_router->first){
-                    numero_f += (long long int)(rand() % (int)(pow(10, costo) - 1) + 1);
 
+                    numero_f = (long long int)(rand() % (int)(pow(10, costo) - 1) + 1);
+                    //numero_f=(rand()%(100)+1);
+                    //cout<<numero_f<<" ";
+                    //cout<<a.it_red->first<<'\n';
+                    //cout<<it_router->first<<'\n';
           a.cam_enlase_enrutadores_red(a.it_red->first,it_router->first,numero_f);
                   numero_f=0;
         }}
       }
       cambio.clear();
-    }a.imp_router_red();
+    }//a.imp_router_red();
 
 
 

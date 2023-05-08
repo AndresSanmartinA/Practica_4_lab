@@ -9,6 +9,9 @@
 #include <cmath>
 #include <vector>
 #include <queue>
+#include <cstdlib>
+#include <ctime>
+#include <random>
 
 
 const int INF = 1e9;
@@ -191,8 +194,8 @@ red aleatory(){//esto lo podemos usar desde la clase a coomo una funcion de a
 }
 */
 bool true_false(int porcentaje){
-    srand(time(NULL));
-    int num_aleatorio=rand()%100;
+    //srand(time(nullptr));
+    int num_aleatorio=rand()%101;
     return(num_aleatorio<porcentaje);//aqui miramos lo de la probabilidad y si se cumple retorna un true o false si nno
 }
 red probabilidad(map<string,Router>& a){
